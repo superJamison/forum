@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>forum</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/bootstrap-theme.min.css}">
+    <link rel="stylesheet" th:href="@{/css/page/login.css}">
+    <script th:src="@{/js/jquery-2.2.3.min.js}"></script>
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+</head>
+<body>
+<div id="app">
+    <div id="login">
+        <table>
+            <form th:action="@{/user/login}" method="post">
+                <tr>
+                    <td>用户名：</td>
+                    <td><input type="text" value="jamison" name="username"></td>
+                </tr>
+                <tr>
+                    <td>密码：</td>
+                    <td><input type="password" value="1234" name="password"></td>
+                </tr>
+                <tr>
+                    <button type="submit">登录</button>
+                </tr>
+            </form>
+        </table>
+    </div>
+</div>
+</body>
+<script th:src="@{/js/vue.js}"></script>
+<script th:src="@{/js/axios-0.18.0.js}"></script>
+<script th:src="@{/js/page/login.js}"></script>
+</html>
