@@ -1,8 +1,15 @@
 package com.jms.forum.controller;
 
+import com.jms.forum.entity.User;
+import com.jms.forum.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 /**
  * @author jamison
@@ -12,8 +19,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class IndexController {
 
+    @Autowired
+    private UserService userService;
+
     @GetMapping("/")
-    public String index(){
+    public String index(HttpServletRequest request){
+        Cookie[] cookies = request.getCookies();
+        for (Cookie cookie : cookies) {
+            if (cookie.getName().equals("token")){
+                String token = cookie.getValue();
+                User user = userService.selectByToken(token);
+                HttpSession session = request.getSession();
+                session.setAttribute("user", user);
+            }
+        }
         return "index";
     }
 

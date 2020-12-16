@@ -10,4 +10,6 @@ import com.jms.forum.entity.User;
 public interface UserService {
 
     User login(String username, String password);
+
+    User selectByToken(String token);
 }

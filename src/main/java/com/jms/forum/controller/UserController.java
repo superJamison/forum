@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import sun.awt.geom.AreaOp;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -25,10 +26,18 @@ public class UserController {
     private UserService userService;
 
     @RequestMapping("/login")
-    public String login(String username, String password, HttpServletRequest request){
-        User user = userService.login(username, password);
-        HttpSession session = request.getSession();
-        session.setAttribute("user", user);
-        return "redirect:/";
+    public String login(User user,
+                        HttpServletResponse response
+                        ){
+        User login = userService.login(user.getUsername(), user.getPassword());
+        if (login != null && login.getId() != null){
+            Cookie cookie = new Cookie("token", login.getToken());
+            cookie.setDomain("localhost");
+            cookie.setPath("/");
+            response.addCookie(cookie);
+            return "redirect:/";
+        }else {
+            return "redirect:/";
+        }
     }
 }
