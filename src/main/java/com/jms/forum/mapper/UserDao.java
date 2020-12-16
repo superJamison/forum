@@ -20,4 +20,5 @@ public interface UserDao {
     User selectByUsername(String username);
 
     User selectByToken(@Param("token") String token);
+
 }

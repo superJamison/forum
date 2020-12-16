@@ -18,7 +18,7 @@
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
                     <span class="sr-only">论坛中心</span>
                 </button>
-                <a class="navbar-brand" href="#">论坛中心</a>
+                <a class="navbar-brand" th:href="@{/}">论坛中心</a>
             </div>
 
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -54,9 +54,9 @@
     <div class="container-fluid main">
         <div class="row" style="background-color: white">
             <div class="col-lg-9 col-md-12 col-sm-12" >
-                <h2><span class="glyphicon glyphicon glyphicon-plus" aria-hidden="true" style="margin-right: 10px;"></span>发起</h2>
+                <h2><span class="glyphicon glyphicon glyphicon-plus" aria-hidden="true" style="margin-right: 20px;"></span>发起</h2>
                 <hr>
-                <form action="/forum/publish" method="post">
+                <form th:action="@{/forum/publish}" method="post">
                     <div class="form-group">
                         <label for="title">问题标题（简单扼要）:</label>
                         <input type="text" class="form-control" id="title" th:value="${title}" name="title" placeholder="问题标题.....">

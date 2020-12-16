@@ -23,7 +23,7 @@
     <select id="selectByToken" resultType="com.jms.forum.entity.User">
       select * from user where token = #{token,jdbcType=VARCHAR}
     </select>
-    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from user
     where id = #{id,jdbcType=INTEGER}
   </delete>
@@ -31,7 +31,7 @@
     insert into user (username, `password`, email, 
       telephone, avatar_url)
     values (#{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, 
-      #{telephone,jdbcType=VARCHAR}, #{avatarUrl, ,jdbcType=VARCHAR})
+      #{telephone,jdbcType=VARCHAR}, #{avatarUrl,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.jms.forum.entity.User" useGeneratedKeys="true">
     insert into user
