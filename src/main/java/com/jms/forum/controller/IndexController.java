@@ -25,12 +25,14 @@ public class IndexController {
     @GetMapping("/")
     public String index(HttpServletRequest request){
         Cookie[] cookies = request.getCookies();
-        for (Cookie cookie : cookies) {
-            if (cookie.getName().equals("token")){
-                String token = cookie.getValue();
-                User user = userService.selectByToken(token);
-                HttpSession session = request.getSession();
-                session.setAttribute("user", user);
+        if (cookies != null && cookies.length != 0){
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("token")){
+                    String token = cookie.getValue();
+                    User user = userService.selectByToken(token);
+                    HttpSession session = request.getSession();
+                    session.setAttribute("user", user);
+                }
             }
         }
         return "index";

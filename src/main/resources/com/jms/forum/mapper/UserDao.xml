@@ -29,9 +29,9 @@
   </delete>
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.jms.forum.entity.User" useGeneratedKeys="true">
     insert into user (username, `password`, email, 
-      telephone)
+      telephone, avatar_url)
     values (#{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, 
-      #{telephone,jdbcType=VARCHAR})
+      #{telephone,jdbcType=VARCHAR}, #{avatarUrl, ,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.jms.forum.entity.User" useGeneratedKeys="true">
     insert into user
