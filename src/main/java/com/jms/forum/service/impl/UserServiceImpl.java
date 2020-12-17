@@ -1,5 +1,8 @@
 package com.jms.forum.service.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.jms.forum.dto.PageResult;
+import com.jms.forum.entity.Question;
 import com.jms.forum.mapper.UserDao;
 import com.jms.forum.entity.User;
 import com.jms.forum.service.UserService;
@@ -7,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -33,6 +37,7 @@ public class UserServiceImpl implements UserService {
     public User selectByToken(String token) {
         return userDao.selectByToken(token);
     }
+
 
 
 }

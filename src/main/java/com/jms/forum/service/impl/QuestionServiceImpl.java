@@ -1,5 +1,8 @@
 package com.jms.forum.service.impl;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+import com.jms.forum.dto.PageResult;
 import com.jms.forum.dto.QuestionDto;
 import com.jms.forum.entity.Question;
 import com.jms.forum.entity.User;
@@ -40,5 +43,15 @@ public class QuestionServiceImpl implements QuestionService {
             questionDtoList.add(questionDto);
         }
         return questionDtoList;
+    }
+
+    @Override
+    public PageResult getPage(Integer page, Integer limit) {
+        Page<Object> objectPage = PageHelper.startPage(page, limit);
+        List<Question> list = questionDao.list();
+        PageResult result = new PageResult();
+        result.setData(list);
+        result.setTotal(objectPage.getTotal());
+        return result;
     }
 }

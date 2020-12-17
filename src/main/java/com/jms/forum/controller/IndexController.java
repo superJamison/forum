@@ -1,5 +1,6 @@
 package com.jms.forum.controller;
 
+import com.jms.forum.dto.PageResult;
 import com.jms.forum.dto.QuestionDto;
 import com.jms.forum.entity.Question;
 import com.jms.forum.entity.User;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -30,6 +32,7 @@ public class IndexController {
 
     @Autowired
     private QuestionService questionService;
+
 
     @GetMapping("/")
     public String index(HttpServletRequest request, Model model){
@@ -60,4 +63,9 @@ public class IndexController {
         return "register";
     }
 
+    @GetMapping("/getIndexPage")
+    @ResponseBody
+    public PageResult getIndexPage(Integer page, Integer limit){
+        return questionService.getPage(page, limit);
+    }
 }

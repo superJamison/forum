@@ -56,7 +56,7 @@
             <div class="col-lg-9 col-md-12 col-sm-12" >
                 <h2><span class="glyphicon glyphicon glyphicon-plus" aria-hidden="true" style="margin-right: 20px;"></span>发起</h2>
                 <hr>
-                <form th:action="@{/forum/publish}" method="post">
+                <form th:action="@{/publish}" method="post">
                     <div class="form-group">
                         <label for="title">问题标题（简单扼要）:</label>
                         <input type="text" class="form-control" id="title" th:value="${title}" name="title" placeholder="问题标题.....">

@@ -1,5 +1,6 @@
 package com.jms.forum.service;
 
+import com.jms.forum.dto.PageResult;
 import com.jms.forum.entity.User;
 
 /**
@@ -12,4 +13,5 @@ public interface UserService {
     User login(String username, String password);
 
     User selectByToken(String token);
+
 }

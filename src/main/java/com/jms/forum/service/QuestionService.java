@@ -1,5 +1,6 @@
 package com.jms.forum.service;
 
+import com.jms.forum.dto.PageResult;
 import com.jms.forum.dto.QuestionDto;
 import com.jms.forum.entity.Question;
 
@@ -12,4 +13,6 @@ import java.util.List;
  */
 public interface QuestionService {
     List<QuestionDto> list();
+
+    PageResult getPage(Integer page, Integer limit);
 }
