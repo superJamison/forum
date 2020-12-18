@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
@@ -42,8 +43,10 @@ public class IndexController {
                 if (cookie.getName().equals("token")){
                     String token = cookie.getValue();
                     User user = userService.selectByToken(token);
-                    HttpSession session = request.getSession();
-                    session.setAttribute("user", user);
+                    if (user != null){
+                        HttpSession session = request.getSession();
+                        session.setAttribute("user", user);
+                    }
                 }
             }
         }
@@ -58,7 +61,7 @@ public class IndexController {
         return "login";
     }
 
-    @GetMapping("/register")
+    @GetMapping("/toRegisterPage")
     public String register(){
         return "register";
     }
@@ -67,5 +70,17 @@ public class IndexController {
     @ResponseBody
     public PageResult getIndexPage(Integer page, Integer limit){
         return questionService.getPage(page, limit);
+    }
+
+    @GetMapping("/logout")
+    public String logout(HttpServletRequest request,
+                         HttpServletResponse responses){
+        request.getSession().removeAttribute("user");
+        Cookie cookie = new Cookie("token", "");
+        cookie.setMaxAge(0);
+        cookie.setDomain("localhost");
+        cookie.setPath("/");
+        responses.addCookie(cookie);
+        return "redirect:/";
     }
 }
