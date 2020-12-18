@@ -2,16 +2,13 @@ package com.jms.forum.controller;
 
 import com.jms.forum.dto.PageResult;
 import com.jms.forum.dto.QuestionDto;
-import com.jms.forum.entity.Question;
 import com.jms.forum.entity.User;
-import com.jms.forum.mapper.QuestionDao;
 import com.jms.forum.service.QuestionService;
 import com.jms.forum.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.Cookie;
@@ -50,9 +47,6 @@ public class IndexController {
                 }
             }
         }
-
-        List<QuestionDto> list = questionService.list();
-        model.addAttribute("questions", list);
         return "index";
     }
 

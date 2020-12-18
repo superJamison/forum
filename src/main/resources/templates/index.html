@@ -69,6 +69,7 @@
                 this.page = page
                 axios.get("/forum/getIndexPage?page="+this.page+"&limit="+this.pageSize) //  , this.searchBrand
                     .then((response) => {
+                        console.log(response.data)
                         this.questionList = response.data.data
                         for (let i = 0; i < this.questionList.length; i++) {
                             this.questionList[i].description = this.stringToShorter(this.questionList[i].description);

@@ -2,14 +2,13 @@ package com.jms.forum.controller;
 
 import com.jms.forum.entity.Question;
 import com.jms.forum.entity.User;
-import com.jms.forum.mapper.QuestionDao;
+import com.jms.forum.mapper.QuestionMapper;
 import com.jms.forum.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -24,7 +23,7 @@ import javax.servlet.http.HttpSession;
 public class PublishController {
 
     @Autowired
-    private QuestionDao questionDao;
+    private QuestionMapper questionMapper;
 
     @Autowired
     private UserService userService;
@@ -81,7 +80,7 @@ public class PublishController {
         question.setCreator(user.getId());
         question.setGmtCreate(System.currentTimeMillis());
         question.setGmtModified(question.getGmtCreate());
-        questionDao.insert(question);
+        questionMapper.insertSelective(question);
         return "redirect:/";
     }
 }
