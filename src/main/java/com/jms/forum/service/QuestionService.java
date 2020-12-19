@@ -15,4 +15,6 @@ public interface QuestionService {
     List<QuestionDto> list();
 
     PageResult getPage(Integer page, Integer limit);
+
+    Question getQuestionById(Integer id);
 }

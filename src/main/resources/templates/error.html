@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>forum</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/bootstrap-theme.min.css}">
+    <link rel="stylesheet" th:href="@{/css/zpageNav.css}">
+    <link rel="stylesheet" th:href="@{/css/page/index.css}">
+    <script th:src="@{/js/jquery-2.2.3.min.js}"></script>
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+</head>
+<body style="background-color: #efefef">
+<div id="app">
+    <div th:include="Header.html::header">1</div>
+    <div class="jumbotron" style="margin-left: 60px;">
+        <h1>出错啦！！！</h1>
+        <p th:text="${message}">服务太热了，要不然你稍后再试试？</p>
+        <p><a class="btn btn-primary btn-lg" th:href="@{/}" role="button">回到主页-></a></p>
+    </div>
+</div>
+</body>
+<script th:src="@{/js/vue.js}"></script>
+<script th:src="@{/js/axios-0.18.0.js}"></script>
+<script th:src="@{/js/zpageNav.js}"></script>
+
+</html>

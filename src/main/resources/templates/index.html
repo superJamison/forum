@@ -27,7 +27,7 @@
                         </a>
                     </div>
                     <div class="media-body question">
-                        <h5 class="media-heading">{{question.title}}</h5>
+                        <h5 class="media-heading"><a @click="toQuestionPage(question.id)" th:href="@{/toQuestionPage}">{{question.title}}</a></h5>
                         <span class="description">{{question.description}}</span> <br>
                         <div style="font-size: small;color: #999"><span>{{question.likeCount}}</span> 人关注 •
                             <span>{{question.commentCount}}</span> 个回复 •
@@ -52,7 +52,7 @@
 <script th:src="@{/js/vue.js}"></script>
 <script th:src="@{/js/axios-0.18.0.js}"></script>
 <script th:src="@{/js/zpageNav.js}"></script>
-<script>
+<script type="module">
 
 
     new Vue({
@@ -66,10 +66,10 @@
         },
         methods: {
             pageHandler(page) {
+                console.log("session:"+this.$session);
                 this.page = page
                 axios.get("/forum/getIndexPage?page="+this.page+"&limit="+this.pageSize) //  , this.searchBrand
                     .then((response) => {
-                        console.log(response.data)
                         this.questionList = response.data.data
                         for (let i = 0; i < this.questionList.length; i++) {
                             this.questionList[i].description = this.stringToShorter(this.questionList[i].description);
@@ -112,15 +112,12 @@
                     return new_value
                 }
                 return str
-            }
+            },
         },
         created(){
             this.pageHandler(1)
         }
     })
 
-    $(function () {
-
-    })
 </script>
 </html>

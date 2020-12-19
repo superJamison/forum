@@ -54,4 +54,9 @@ public class QuestionServiceImpl implements QuestionService {
         result.setTotal(objectPage.getTotal());
         return result;
     }
+
+    @Override
+    public Question getQuestionById(Integer id) {
+        return questionMapper.selectByPrimaryKey(id);
+    }
 }

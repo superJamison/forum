@@ -10,9 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 /**
  * @author jamison
@@ -24,9 +22,6 @@ public class PublishController {
 
     @Autowired
     private QuestionMapper questionMapper;
-
-    @Autowired
-    private UserService userService;
 
     @GetMapping("/publish")
     public String publish(){
@@ -54,21 +49,7 @@ public class PublishController {
             return "publish";
         }
 
-        User user = null;
-        Cookie[] cookies = request.getCookies();
-        if (cookies != null && cookies.length != 0){
-            for (Cookie cookie : cookies) {
-                if (cookie.getName().equals("token")){
-                    String token = cookie.getValue();
-                    user = userService.selectByToken(token);
-                    if (user != null){
-                        HttpSession session = request.getSession();
-                        session.setAttribute("user", user);
-                        question.setCreator(user.getId());
-                    }
-                }
-            }
-        }
+        User user = (User) request.getSession().getAttribute("user");
 
         if (user == null){
            model.addAttribute("error", "用户未登录!");

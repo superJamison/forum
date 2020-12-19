@@ -33,20 +33,7 @@ public class IndexController {
 
 
     @GetMapping("/")
-    public String index(HttpServletRequest request, Model model){
-        Cookie[] cookies = request.getCookies();
-        if (cookies != null && cookies.length != 0){
-            for (Cookie cookie : cookies) {
-                if (cookie.getName().equals("token")){
-                    String token = cookie.getValue();
-                    User user = userService.selectByToken(token);
-                    if (user != null){
-                        HttpSession session = request.getSession();
-                        session.setAttribute("user", user);
-                    }
-                }
-            }
-        }
+    public String index(){
         return "index";
     }
 

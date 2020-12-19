@@ -1,6 +1,9 @@
 package com.jms.forum.dto;
 
+import com.jms.forum.exception.CustomizeErrorCode;
+import com.jms.forum.exception.CustomizeException;
 import lombok.Data;
+import sun.security.krb5.internal.PAData;
 
 import java.io.Serializable;
 import java.util.List;
@@ -14,4 +17,36 @@ import java.util.List;
 public class PageResult implements Serializable {
     private List data;
     private Long total;
+    private String message;
+    private boolean success;
+    private Integer code;
+
+    public static PageResult errorOf(CustomizeErrorCode errorCode) {
+        return errorOf(errorCode.getCode(), errorCode.getMessage());
+    }
+
+    public static PageResult errorOf(CustomizeException e) {
+        return errorOf(e.getCode(), e.getMessage());
+    }
+
+    private static PageResult errorOf(Integer code, String message) {
+        PageResult pageResult = new PageResult();
+        pageResult.setCode(code);
+        pageResult.setMessage(message);
+        return pageResult;
+    }
+    public static PageResult okOf() {
+        PageResult pageResult = new PageResult();
+        pageResult.setCode(200);
+        pageResult.setMessage("请求成功");
+        return pageResult;
+    }
+
+    public static <T> PageResult okOf(List<T> t) {
+        PageResult pageResult = new PageResult();
+        pageResult.setCode(200);
+        pageResult.setMessage("请求成功");
+        pageResult.setData(t);
+        return pageResult;
+    }
 }
