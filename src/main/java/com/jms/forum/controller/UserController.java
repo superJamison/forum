@@ -1,39 +1,30 @@
 package com.jms.forum.controller;
 
+import com.jms.forum.dto.UserDto;
 import com.jms.forum.entity.User;
 import com.jms.forum.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author jamison
  * @version 1.0
  * @date 2020/12/15 21:36
  */
-@Controller
+@RestController
 @RequestMapping("/user")
 public class UserController {
 
     @Autowired
     private UserService userService;
 
-    @RequestMapping("/login")
-    public String login(User user,
-                        HttpServletResponse response
-                        ){
-        User login = userService.login(user.getUsername(), user.getPassword());
-        if (login != null && login.getId() != null){
-            Cookie cookie = new Cookie("token", login.getToken());
-            cookie.setDomain("localhost");
-            cookie.setPath("/");
-            response.addCookie(cookie);
-            return "redirect:/";
-        }else {
-            return "redirect:/";
-        }
+    @PostMapping("/login")
+    public UserDto login(User user){
+        return userService.login(user.getUsername(), user.getPassword());
+
     }
 }

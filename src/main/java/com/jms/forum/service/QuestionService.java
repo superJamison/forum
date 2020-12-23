@@ -2,6 +2,7 @@ package com.jms.forum.service;
 
 import com.jms.forum.dto.PageResult;
 import com.jms.forum.dto.QuestionDto;
+import com.jms.forum.dto.Result;
 import com.jms.forum.entity.Question;
 
 import java.util.List;
@@ -17,4 +18,10 @@ public interface QuestionService {
     PageResult getPage(Integer page, Integer limit);
 
     Question getQuestionById(Integer id);
+
+    Result addQuestion(Question question);
+
+    PageResult getMyProblemPage(Integer page, Integer limit, Integer id);
+
+    QuestionDto getQuestionDtoById(Integer id);
 }

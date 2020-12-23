@@ -1,5 +1,6 @@
 package com.jms.forum.service.impl;
 
+import com.jms.forum.dto.UserDto;
 import com.jms.forum.entity.User;
 import com.jms.forum.mapper.UserExMapper;
 import com.jms.forum.mapper.UserMapper;
@@ -24,12 +25,17 @@ public class UserServiceImpl implements UserService {
     private UserExMapper userExMapper;
 
 
-    public User login(String username, String password){
+    public UserDto login(String username, String password){
         User user = userExMapper.selectByUsername(username);
+        UserDto userDto = new UserDto();
         if (user.getPassword().equals(password)){
-            return user;
+            userDto.setLogin(true);
+            user.setPassword("");
+            userDto.setUser(user);
+            return userDto;
         }
-        return null;
+        userDto.setLogin(false);
+        return userDto;
     }
 
     @Override

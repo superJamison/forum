@@ -2,7 +2,9 @@ package com.jms.forum.dto;
 
 import com.jms.forum.exception.CustomizeErrorCode;
 import com.jms.forum.exception.CustomizeException;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import sun.security.krb5.internal.PAData;
 
 import java.io.Serializable;
@@ -14,6 +16,8 @@ import java.util.List;
  * @date 2020/12/17 13:29
  */
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class PageResult implements Serializable {
     private List data;
     private Long total;

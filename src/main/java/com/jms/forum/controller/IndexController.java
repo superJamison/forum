@@ -1,32 +1,24 @@
 package com.jms.forum.controller;
 
 import com.jms.forum.dto.PageResult;
-import com.jms.forum.dto.QuestionDto;
-import com.jms.forum.entity.User;
 import com.jms.forum.service.QuestionService;
 import com.jms.forum.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import java.util.List;
+
 
 /**
  * @author jamison
  * @version 1.0
  * @date 2020/12/15 17:18
  */
-@Controller
+@RestController
 public class IndexController {
-
-    @Autowired
-    private UserService userService;
 
     @Autowired
     private QuestionService questionService;
@@ -34,6 +26,7 @@ public class IndexController {
 
     @GetMapping("/")
     public String index(){
+
         return "index";
     }
 
@@ -48,9 +41,13 @@ public class IndexController {
     }
 
     @GetMapping("/getIndexPage")
-    @ResponseBody
     public PageResult getIndexPage(Integer page, Integer limit){
         return questionService.getPage(page, limit);
+    }
+
+    @GetMapping("/getMyProblemPage")
+    public PageResult getMyProblemPage(Integer page, Integer limit, Integer id){
+        return questionService.getMyProblemPage(page, limit, id);
     }
 
     @GetMapping("/logout")
