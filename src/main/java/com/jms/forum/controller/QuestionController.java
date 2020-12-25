@@ -40,6 +40,12 @@ public class QuestionController {
         return result;
     }
 
+    @PostMapping("/updateQuestion")
+    public Result updateQuestion(Question question, HttpServletRequest request){
+        Result result = questionService.updateQuestion(question);
+        return result;
+    }
+
     @GetMapping("/getQuestionById")
     @ResponseBody
     public Question getQuestionById(Integer id){

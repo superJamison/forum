@@ -101,4 +101,15 @@ public class QuestionServiceImpl implements QuestionService {
         questionDto.setUser(users.get(0));
         return questionDto;
     }
+
+    @Override
+    public Result updateQuestion(Question question) {
+        try {
+           questionMapper.updateByPrimaryKeySelective(question);
+           return new Result(true, "问题更新成功！");
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return new Result(false, "问题更新失败！");
+    }
 }

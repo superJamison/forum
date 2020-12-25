@@ -24,4 +24,6 @@ public interface QuestionService {
     PageResult getMyProblemPage(Integer page, Integer limit, Integer id);
 
     QuestionDto getQuestionDtoById(Integer id);
+
+    Result updateQuestion(Question question);
 }
