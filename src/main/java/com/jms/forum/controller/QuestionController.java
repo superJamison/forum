@@ -46,10 +46,9 @@ public class QuestionController {
         return result;
     }
 
-    @GetMapping("/getQuestionById")
-    @ResponseBody
-    public Question getQuestionById(Integer id){
-        return questionService.getQuestionById(id);
+    @PostMapping("/addViewCount")
+    public void addViewCount(Question question){
+        questionService.addViewCount(question);
     }
 
     @PostMapping("/getQuestionById")

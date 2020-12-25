@@ -26,4 +26,6 @@ public interface QuestionService {
     QuestionDto getQuestionDtoById(Integer id);
 
     Result updateQuestion(Question question);
+
+    void addViewCount(Question question);
 }

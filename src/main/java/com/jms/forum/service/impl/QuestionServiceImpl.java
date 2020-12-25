@@ -9,6 +9,7 @@ import com.jms.forum.entity.Question;
 import com.jms.forum.entity.QuestionExample;
 import com.jms.forum.entity.User;
 import com.jms.forum.entity.UserExample;
+import com.jms.forum.mapper.QuestionExMapper;
 import com.jms.forum.mapper.QuestionMapper;
 import com.jms.forum.mapper.UserMapper;
 import com.jms.forum.service.QuestionService;
@@ -29,6 +30,9 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Autowired
     private QuestionMapper questionMapper;
+
+    @Autowired
+    private QuestionExMapper questionExMapper;
 
     @Autowired
     private UserMapper userMapper;
@@ -105,11 +109,17 @@ public class QuestionServiceImpl implements QuestionService {
     @Override
     public Result updateQuestion(Question question) {
         try {
+            question.setGmtModified(System.currentTimeMillis());
            questionMapper.updateByPrimaryKeySelective(question);
            return new Result(true, "问题更新成功！");
         }catch (Exception e){
             e.printStackTrace();
         }
         return new Result(false, "问题更新失败！");
+    }
+
+    @Override
+    public void addViewCount(Question question) {
+        questionExMapper.updateViewCountByQuestionId(question.getId());
     }
 }
