@@ -1,15 +1,18 @@
 package com.jms.forum.controller;
 
+import com.jms.forum.dto.CommentDto;
 import com.jms.forum.dto.Result;
 import com.jms.forum.entity.Comment;
 import com.jms.forum.entity.User;
 import com.jms.forum.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * @author jamison
@@ -31,5 +34,10 @@ public class CommentController {
         }
         comment.setCommentator(user.getId());
         return commentService.addComment(comment);
+    }
+
+    @GetMapping("/getReplyById")
+    public List<CommentDto> getReplyById(Integer questionId){
+        return commentService.getReplyById(questionId);
     }
 }
