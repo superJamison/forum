@@ -20,5 +20,8 @@
   <update id="updateViewCountByQuestionId">
     update question set view_count = view_count + 1 where id = #{id}
   </update>
+    <update id="updateCommentCount">
+      update question set comment_count = comment_count + 1 where id = #{id}
+    </update>
 
 </mapper>

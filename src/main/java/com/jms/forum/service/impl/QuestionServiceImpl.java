@@ -5,10 +5,8 @@ import com.github.pagehelper.PageHelper;
 import com.jms.forum.dto.PageResult;
 import com.jms.forum.dto.QuestionDto;
 import com.jms.forum.dto.Result;
-import com.jms.forum.entity.Question;
-import com.jms.forum.entity.QuestionExample;
-import com.jms.forum.entity.User;
-import com.jms.forum.entity.UserExample;
+import com.jms.forum.entity.*;
+import com.jms.forum.mapper.CommentMapper;
 import com.jms.forum.mapper.QuestionExMapper;
 import com.jms.forum.mapper.QuestionMapper;
 import com.jms.forum.mapper.UserMapper;
@@ -37,6 +35,9 @@ public class QuestionServiceImpl implements QuestionService {
     @Autowired
     private UserMapper userMapper;
 
+    @Autowired
+    private CommentMapper commentMapper;
+
     @Override
     public List<QuestionDto> list() {
         List<QuestionDto> questionDtoList = new ArrayList<>();
@@ -52,9 +53,18 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    public PageResult getPage(Integer page, Integer limit) {
+    public PageResult getPage(Integer page, Integer limit, String searchContent) {
         Page<Object> objectPage = PageHelper.startPage(page, limit);
-        List<Question> list = questionMapper.selectByExample(new QuestionExample());
+        QuestionExample questionExample = new QuestionExample();
+        if (!"".equals(searchContent)){
+            QuestionExample.Criteria criteria1 = questionExample.createCriteria();
+            QuestionExample.Criteria criteria2 = questionExample.createCriteria();
+            criteria1.andDescriptionLike("%"+searchContent+"%");
+            //or
+            criteria2.andTitleLike("%"+searchContent+"%");
+            questionExample.or(criteria2);
+        }
+        List<Question> list = questionMapper.selectByExample(questionExample);
         PageResult result = new PageResult();
         result.setData(list);
         result.setTotal(objectPage.getTotal());
@@ -121,5 +131,15 @@ public class QuestionServiceImpl implements QuestionService {
     @Override
     public void addViewCount(Question question) {
         questionExMapper.updateViewCountByQuestionId(question.getId());
+    }
+
+    @Override
+    public void addReplyQuestionCount(Comment comment) {
+        if (comment.getType() == 1){
+            questionExMapper.updateCommentCount(comment.getParentId());
+        }else if (comment.getType() == 2){
+            Comment comment1 = commentMapper.selectByPrimaryKey(comment.getParentId());
+            questionExMapper.updateCommentCount(comment1.getParentId());
+        }
     }
 }

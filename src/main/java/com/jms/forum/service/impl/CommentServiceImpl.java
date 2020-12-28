@@ -4,6 +4,7 @@ import com.jms.forum.dto.CommentDto;
 import com.jms.forum.dto.Result;
 import com.jms.forum.entity.Comment;
 import com.jms.forum.entity.CommentExample;
+import com.jms.forum.mapper.CommentExMapper;
 import com.jms.forum.mapper.CommentMapper;
 import com.jms.forum.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,9 @@ public class CommentServiceImpl implements CommentService {
 
     @Autowired
     private CommentMapper commentMapper;
+
+    @Autowired
+    private CommentExMapper commentExMapper;
 
     @Override
     public Result addComment(Comment comment) {
@@ -58,5 +62,16 @@ public class CommentServiceImpl implements CommentService {
             list.add(commentDto);
         }
         return list;
+    }
+
+    @Override
+    public Result addLikeCount(Comment comment) {
+        try {
+            commentExMapper.addLikeCount(comment.getId());
+            return new Result(true, "点赞成功");
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return new Result(false, "点赞失败");
     }
 }

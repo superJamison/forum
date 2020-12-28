@@ -26,4 +26,10 @@ public interface CommentService {
      */
     List<CommentDto> getReplyById(Integer questionId);
 
+    /**
+     * 添加点赞喜欢
+     * @param comment
+     * @return
+     */
+    Result addLikeCount(Comment comment);
 }

@@ -41,8 +41,8 @@ public class IndexController {
     }
 
     @GetMapping("/getIndexPage")
-    public PageResult getIndexPage(Integer page, Integer limit){
-        return questionService.getPage(page, limit);
+    public PageResult getIndexPage(Integer page, Integer limit, String searchContent){
+        return questionService.getPage(page, limit, searchContent);
     }
 
     @GetMapping("/getMyProblemPage")
