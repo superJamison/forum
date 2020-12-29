@@ -15,4 +15,5 @@ public interface UserService {
 
     User selectByToken(String token);
 
+    void updateAvatar(Integer userId, String avatar_url);
 }

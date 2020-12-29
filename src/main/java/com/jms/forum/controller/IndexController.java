@@ -45,9 +45,16 @@ public class IndexController {
         return questionService.getPage(page, limit, searchContent);
     }
 
+    //获取我的问题，根据用户id获取问题
     @GetMapping("/getMyProblemPage")
     public PageResult getMyProblemPage(Integer page, Integer limit, Integer id){
         return questionService.getMyProblemPage(page, limit, id);
+    }
+
+    //获取我的问题，根据用户id获取问题
+    @GetMapping("/getMyNewReplyPage")
+    public PageResult getMyNewReplyPage(Integer page, Integer limit, Integer id){
+        return questionService.getMyNewReplyPage(page, limit, id);
     }
 
     @GetMapping("/logout")

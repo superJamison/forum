@@ -43,6 +43,13 @@ public class UserServiceImpl implements UserService {
         return userExMapper.selectByToken(token);
     }
 
+    @Override
+    public void updateAvatar(Integer userId, String avatar_url) {
+        User user = new User();
+        user.setId(userId);
+        user.setAvatarUrl(avatar_url);
+        userMapper.updateByPrimaryKeySelective(user);
+    }
 
 
 }

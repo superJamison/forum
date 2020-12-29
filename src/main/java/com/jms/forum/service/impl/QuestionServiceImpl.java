@@ -13,7 +13,9 @@ import com.jms.forum.mapper.UserMapper;
 import com.jms.forum.service.QuestionService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +26,7 @@ import java.util.List;
  * @date 2020/12/16 23:03
  */
 @Service
+@Transactional
 public class QuestionServiceImpl implements QuestionService {
 
     @Autowired
@@ -59,14 +62,25 @@ public class QuestionServiceImpl implements QuestionService {
         if (!"".equals(searchContent)){
             QuestionExample.Criteria criteria1 = questionExample.createCriteria();
             QuestionExample.Criteria criteria2 = questionExample.createCriteria();
+            QuestionExample.Criteria criteria3 = questionExample.createCriteria();
             criteria1.andDescriptionLike("%"+searchContent+"%");
             //or
             criteria2.andTitleLike("%"+searchContent+"%");
+            criteria3.andTagLike("%"+searchContent+"%");
             questionExample.or(criteria2);
+            questionExample.or(criteria3);
         }
         List<Question> list = questionMapper.selectByExample(questionExample);
+        List<QuestionDto> questionDtoList = new ArrayList<>();
+        for (int i = 0; i < list.size(); i++) {
+            User user = userMapper.selectByPrimaryKey(list.get(i).getCreator());
+            QuestionDto questionDto = new QuestionDto();
+            BeanUtils.copyProperties(list.get(i), questionDto);
+            questionDto.setUser(user);
+            questionDtoList.add(questionDto);
+        }
         PageResult result = new PageResult();
-        result.setData(list);
+        result.setData(questionDtoList);
         result.setTotal(objectPage.getTotal());
         return result;
     }
@@ -94,14 +108,27 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Override
     public PageResult getMyProblemPage(Integer page, Integer limit, Integer id) {
-        Page<Object> objectPage = PageHelper.startPage(page, limit);
-        QuestionExample questionExample = new QuestionExample();
-        questionExample.createCriteria().andCreatorEqualTo(id);
-        List<Question> list = questionMapper.selectByExample(questionExample);
-        PageResult result = new PageResult();
-        result.setData(list);
-        result.setTotal(objectPage.getTotal());
-        return result;
+        try {
+            Page<Object> objectPage = PageHelper.startPage(page, limit);
+            QuestionExample questionExample = new QuestionExample();
+            questionExample.createCriteria().andCreatorEqualTo(id);
+            List<Question> list = questionMapper.selectByExample(questionExample);
+            User user = userMapper.selectByPrimaryKey(id);
+            List<QuestionDto> questionDtoList = new ArrayList<>();
+            for (int i = 0; i < list.size(); i++) {
+                QuestionDto questionDto = new QuestionDto();
+                BeanUtils.copyProperties(list.get(i), questionDto);
+                questionDto.setUser(user);
+                questionDtoList.add(questionDto);
+            }
+            PageResult result = new PageResult();
+            result.setData(questionDtoList);
+            result.setTotal(objectPage.getTotal());
+            return result;
+        }catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     @Override
@@ -141,5 +168,10 @@ public class QuestionServiceImpl implements QuestionService {
             Comment comment1 = commentMapper.selectByPrimaryKey(comment.getParentId());
             questionExMapper.updateCommentCount(comment1.getParentId());
         }
+    }
+
+    @Override
+    public PageResult getMyNewReplyPage(Integer page, Integer limit, Integer id) {
+        return null;
     }
 }

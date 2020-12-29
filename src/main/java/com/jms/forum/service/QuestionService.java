@@ -32,4 +32,6 @@ public interface QuestionService {
 
 
     void addReplyQuestionCount(Comment comment);
+
+    PageResult getMyNewReplyPage(Integer page, Integer limit, Integer id);
 }
