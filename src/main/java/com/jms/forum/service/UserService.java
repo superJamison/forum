@@ -4,6 +4,8 @@ import com.jms.forum.dto.PageResult;
 import com.jms.forum.dto.UserDto;
 import com.jms.forum.entity.User;
 
+import java.util.List;
+
 /**
  * @author jamison
  * @version 1.0
@@ -16,4 +18,9 @@ public interface UserService {
     User selectByToken(String token);
 
     void updateAvatar(Integer userId, String avatar_url);
+
+    void add(User user);
+
+    List<String> getAllUser();
+
 }

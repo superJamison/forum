@@ -174,4 +174,18 @@ public class QuestionServiceImpl implements QuestionService {
     public PageResult getMyNewReplyPage(Integer page, Integer limit, Integer id) {
         return null;
     }
+
+    @Override
+    public String getHotTags() {
+        List<String> tags = questionExMapper.selectTopic();
+        String hotTopic = "";
+        for (int i = 0; i < tags.size(); i++) {
+            if (i == tags.size()){
+                hotTopic = hotTopic + tags.get(i);
+            }else {
+                hotTopic = hotTopic + tags.get(i) + ",";
+            }
+        }
+        return hotTopic;
+    }
 }

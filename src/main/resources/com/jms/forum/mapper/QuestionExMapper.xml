@@ -23,5 +23,9 @@
     <update id="updateCommentCount">
       update question set comment_count = comment_count + 1 where id = #{id}
     </update>
+  <select id="selectTopic" resultType="java.lang.String">
+    select tag from question;
+  </select>
+
 
 </mapper>

@@ -12,4 +12,5 @@ import lombok.Data;
 public class UserDto {
     private boolean login;
     private User user;
+    private String message;
 }

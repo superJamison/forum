@@ -20,6 +20,9 @@
   <select id="selectByToken" resultType="com.jms.forum.entity.User">
     select * from user where token = #{token};
   </select>
+    <select id="selectAllUsername" resultType="java.lang.String">
+      select username from user;
+    </select>
 
 
 </mapper>

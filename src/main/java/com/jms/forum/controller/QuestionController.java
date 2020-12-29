@@ -56,4 +56,9 @@ public class QuestionController {
         return questionService.getQuestionDtoById(question.getId());
     }
 
+    @GetMapping("/getHotTags")
+    public String getHotTags(){
+        return questionService.getHotTags();
+    }
+
 }
