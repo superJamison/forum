@@ -30,9 +30,15 @@ public class UserServiceImpl implements UserService {
 
 
     public UserDto login(String username, String password){
-        User user = userExMapper.selectByUsername(username);
-        String password1 = MD5Utils.inputPassToDbPass(password, username);
         UserDto userDto = new UserDto();
+        User user = userExMapper.selectByUsername(username);
+        if (user == null || "".equals(user)){
+            userDto.setLogin(false);
+            userDto.setMessage("用户名不存在！");
+            return userDto;
+        }
+        String password1 = MD5Utils.inputPassToDbPass(password, username);
+
         if (user.getPassword().equals(password1)){
             userDto.setLogin(true);
             user.setPassword("");
