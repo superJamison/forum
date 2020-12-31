@@ -65,6 +65,16 @@ public class UserController {
         return userService.login(user.getUsername(), user.getPassword());
     }
 
+    @PostMapping("/getUserByToken")
+    public UserDto getUserByToken(String token){
+        User user = userService.getUserByToken(token);
+        UserDto userDto = new UserDto();
+        userDto.setLogin(true);
+        userDto.setUser(user);
+        userDto.setMessage("登录成功！");
+        return userDto;
+    }
+
     @PostMapping("/upload")
     @CrossOrigin()
     public UploadDto singleFileUpload(@RequestParam("file") MultipartFile file,

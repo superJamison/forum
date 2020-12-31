@@ -23,4 +23,5 @@ public interface UserService {
 
     List<String> getAllUser();
 
+    User getUserByToken(String token);
 }

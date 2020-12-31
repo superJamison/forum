@@ -73,5 +73,19 @@ public class UserServiceImpl implements UserService {
         return userExMapper.selectAllUsername();
     }
 
+    @Override
+    public User getUserByToken(String token) {
+        UserExample userExample = new UserExample();
+        UserExample.Criteria criteria = userExample.createCriteria();
+        criteria.andTokenEqualTo(token);
+        List<User> users = userMapper.selectByExample(userExample);
+        if (users == null || "".equals(users)){
+            return new User();
+        }
+        User user = users.get(0);
+        System.out.println(user);
+        return user;
+    }
+
 
 }
