@@ -73,7 +73,7 @@ public class QuestionServiceImpl implements QuestionService {
         List<Question> list = questionMapper.selectByExample(questionExample);
         List<QuestionDto> questionDtoList = new ArrayList<>();
         for (int i = 0; i < list.size(); i++) {
-            User user = userMapper.selectByPrimaryKey(list.get(i).getCreator());
+                User user = userMapper.selectByPrimaryKey(list.get(i).getCreator());
             QuestionDto questionDto = new QuestionDto();
             BeanUtils.copyProperties(list.get(i), questionDto);
             questionDto.setUser(user);
